@@ -29,7 +29,7 @@ module.exports = {
   // login a user, sign a token, and send it back (to client/src/components/LoginForm.js)
   // {body} is destructured req.body
   async login({ body }, res) {
-    const user = await User.findOne({ $or: [{ username: body.username }, { email: body.email }] });
+    const user = await User.findOne({ email: body.email });
     if (!user) {
       return res.status(400).json({ message: "Can't find this user" });
     }
@@ -43,7 +43,7 @@ module.exports = {
     res.json({ token, user });
   },
   // save a book to a user's `savedBooks` field by adding it to the set (to prevent duplicates)
-  // user comes from `req.user` created in the auth middleware function
+  // user comes from `req.user` created in the  middleware function
   async saveBook({ user, body }, res) {
     console.log(user);
     try {
